@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="video">
+            
+        </div>
+       <script>
+           var baseURL = "https://www.googleapis.com/youtube/v3/search";
+           var token = "AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo"
+            $.ajax({ 
+                url: baseURL+"?key="+token // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                ,data: { part: "snippet"} // HTTP 요청과 함께 서버로 보낼 데이터 
+               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+            .done(function(data) {      
+                console.log(data)
+                console.log(data.pageInfo.totalResults)
+                var length = data.items.length
+                var html='';
+                for(var i =0; i<length;i++){
+                    var title = data.items[i].snippet.title
+                        html += "<li>"+title+"</li>"
+                }
+                
+                 $("#youtube").append(html)
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+               console.log("오류")
+            })  
+       </script> 
+    </body>
+</html>

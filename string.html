@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <input type="text" id="text"/>
+       <script>
+        var id = document.querySelector("#text");
+        
+        id.addEventListener("keyup", (item)=>{
+            var length = id.value.length
+            console.log(fncByteCheck(id, 100))
+        })
+
+        function fncByteCheck(el, limit){
+            var codeByte = 0;
+            var str = el.value;
+            var lastStr = ''    
+            for (var idx = 0; idx < el.value.length; idx++){
+                var oncChar = escape(el.value.charAt(idx));
+                if( oncChar.length ==1 ){
+                    codeByte++;
+                } else if(oncChar.indexOf("%u") != -1){
+                    codeByte +=2;
+                } else if(oncChar.indexOf("%") != -1){
+                    codeByte++
+                }
+                if(codeByte > limit){
+                    lastStr = str.substr(0, limit)
+                    el.value = lastStr
+                }
+            }
+            return codeByte;
+        }
+       </script> 
+    </body>
+</html>

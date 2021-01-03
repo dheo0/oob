@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <ul id="demo">
+            <script type="template" id="commentTemplate">
+                
+                {{#each this}}
+                
+                <li class="list_item">
+                    <div>
+                        <div class="review_area">
+                            <img src="{{photo}}" alt=""></p>
+                        </div>
+                    </div>
+                </li>
+                
+                {{/each}}
+                
+            </script>
+        </ul>
+        <div>
+            <input type="checkbox" name="chkgroup" id="chk01" /><label for="chk01">111</label>
+            <input type="checkbox" name="chkgroup" id="chk02" /><label for="chk02">111</label>
+            <input type="checkbox" name="chkgroup" id="chk03" /><label for="chk03">111</label>
+            <input type="checkbox" name="chkgroup" id="chk04" /><label for="chk04">111</label>
+            <input type="checkbox" name="chkgroup" id="chk05" /><label for="chk05">111</label>
+            <input type="checkbox" name="chkgroup" id="chk06" /><label for="chk06">111</label>
+            <input type="checkbox" name="chkgroup" id="chk07" /><label for="chk07">111</label>
+            <input type="checkbox" name="chkgroup" id="chk08" /><label for="chk08">111</label>
+            <input type="checkbox" name="chkgroup" id="chk09" /><label for="chk09">111</label>
+            <input type="checkbox" name="chkgroup" id="chk10" /><label for="chk10">111</label>
+            <input type="checkbox" name="chkgroup" id="chk11" /><label for="chk11">111</label>
+            <input type="checkbox" name="chkgroup" id="chk12" /><label for="chk12">111</label>
+        </div>
+       <script>
+          
+           var baseURL = "http://sample.bmaster.kro.kr/contactS";
+            $.ajax({ 
+                url: baseURL // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+               
+               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+            .done(function(data) {
+                var list = data
+                var newArray =  list.contacts.filter(function(elem, index, array){
+                    return elem.no < 1592030163108
+                })
+
+                var commentTemplate = document.querySelector("#commentTemplate").innerHTML;
+                var commentBindTemplate = Handlebars.compile(commentTemplate);
+                //3. 컴파일한 템플릿에 데이터를 집어넣는다. 이 때 리턴값은 html로 나온다.
+                var resultHtml = '';
+                resultHtml += commentBindTemplate(newArray);
+                
+                // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
+                $("#demo").html(resultHtml)
+                
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+               console.log("오류")
+            })  
+            
+            var things = new Object();
+            var arr2;
+            things.thing = new Array();
+            
+            things.thing.push({place:"here", name:"stuff"})
+            things.thing.push({place:"here1", name:"stuff"})
+
+            arr2 = things.thing.filter(function(elem){
+                return elem.place === "here"
+            })
+            //arr2.push({place:"here12", name:"stuff"})
+            things.thing =[]
+            //console.log(things.thing)
+            
+       </script> 
+    </body>
+</html>

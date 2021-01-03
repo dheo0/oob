@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <ul id="demo">
+            <script type="template" id="commentTemplate">
+                
+                {{#each this}}
+                
+                <li class="list_item">
+                    <div>
+                        <div class="review_area">
+                            <img src="{{photo}}" alt=""></p>
+                        </div>
+                    </div>
+                </li>
+                
+                {{/each}}
+                
+            </script>
+        </ul>
+        
+       <script>
+          
+           var baseURL = "http://sample.bmaster.kro.kr/contactS";
+            $.ajax({ 
+                url: baseURL // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+               
+               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+            .done(function(data) {
+                var result = data;
+                var contacts = JSON.stringify(result)
+                //console.log(result.contacts)
+                
+                saveToDos(contacts)
+                
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+               console.log("오류")
+            })  
+            
+            function saveToDos(contacts){
+                localStorage.setItem("key", contacts)
+
+                var getValue = localStorage.getItem('key')
+                getValue = JSON.parse(getValue)
+                var memos = getValue.contacts
+                
+                var commentTemplate = document.querySelector("#commentTemplate").innerHTML;
+                var commentBindTemplate = Handlebars.compile(commentTemplate);
+                //3. 컴파일한 템플릿에 데이터를 집어넣는다. 이 때 리턴값은 html로 나온다.
+                var resultHtml = '';
+                resultHtml += commentBindTemplate(memos);
+                console.log(memos)
+                // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
+                $("#demo").html(resultHtml)
+            }
+            
+            
+       </script> 
+    </body>
+</html>

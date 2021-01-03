@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <input type="checkbox" id="chk01" name="chkGroup"><label for="chk01">kospi</label>
+        <input type="checkbox" id="chk02" name="chkGroup"><label for="chk02">kosdaq</label>
+        <input type="checkbox" id="chk03" name="chkGroup"><label for="chk03">Nasdaq</label>
+        <input type="checkbox" id="chk04" name="chkGroup"><label for="chk04">gold</label>
+        <button type="button" onclick="fncUserApiSet()">유저세팅값 저장</button>
+        <div id="result"></div>
+       <script>
+            getSetReady()
+           function fncUserApiSet(){
+               // 체크박스의 선택 및 선택하지 않는지 
+               var allCheckbox  = $("[name='chkGroup']")
+               var checked = $("[name='chkGroup']:checked")
+               var checkedLen = checked.length;
+
+               var status = {};
+                   status.checked =[]
+                   status.unchecked =[]
+               // {"setting": [{"chk01":"Y"}]}
+               $("[name='chkGroup']").each(function(){
+                    var id= $(this).attr("id");
+                    
+                    if($(this).is(":checked")){
+                        status.checked.push(id)
+                    } else {
+                        status.unchecked.push(id)
+                    }
+               })
+               
+               localStorage.setItem("setting", JSON.stringify(status))
+               //console.log(typeof status)
+               getSetReady()
+           }
+
+           function getSetReady(){
+               var getValue = localStorage.getItem("setting");
+               if(getValue){
+                   getValue = JSON.parse(getValue);
+               var checked = getValue.checked;
+               var unchecked = getValue.unchecked;
+               
+                for (var i=0; i < checked.length; i++){
+                    $("#"+checked[i]).attr("checked","checked")
+                }
+              }
+           }
+
+           // default 처음 저장된 값을 가지고 온다 
+           // 처음 값과 비교
+           var checked = $("input[type='checkbox']:checked");
+            var orginArr =[];
+            var tempArr = [];
+            var resultArr = [];
+            for(var i=0; i< checked.length;i++){
+                orginArr.push(checked[i].value)
+                tempArr.push(checked[i].value)
+            }
+            var resultArr = [];
+            console.log(orginArr, tempArr)
+           $("input[type='checkbox']").each(function (index, item) { 
+              $(item).on("click", function(){
+                var chk = item.checked
+                    if(chk){
+                        //해당하는 값 추가
+                        resultArr.push(item.value)
+
+                        //tempArr.lenght === resultArr.length && 
+                        console.log("AAAA" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                        console.log(resultArr)
+                        console.log(tempArr)
+                    } else{
+                        //해당하는 값 삭제
+                        
+                        resultArr.splice(resultArr.indexOf(item.value),1)
+                        console.log("BBBB" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                    }
+              })
+            });
+
+           
+
+            
+
+           
+        var baseURL = "http://sample.bmaster.kro.kr/contactS";
+        var options = {}
+            options.url = baseURL;
+            options.method = "GET";
+            options.datetype = "json";
+            callData(options)
+        function callData(options){
+            $.ajax(options) 
+            .done(function(data) {
+                var list = data
+                var newArray =  list.contacts.filter(function(elem, index, array){
+                    return elem.no < 1592030163108
+                })
+                
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+                console.log("오류")
+            })
+        }
+        
+       </script> 
+    </body>
+</html>

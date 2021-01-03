@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <input type="checkbox" id="a1010" value="value01" checked="checked"><label for="a1010">value01</label>
+        <input type="checkbox" id="a1011" value="value02" checked="checked"><label for="a1011">value02</label>
+        <input type="checkbox" id="a1012" value="value03"><label for="a1012">value03</label>
+        <input type="checkbox" id="a1013" value="value04"><label for="a1013">value04</label>
+        <input type="checkbox" id="a1014" value="value05"><label for="a1014">value05</label>
+        <input type="checkbox" id="a1015" value="value06"><label for="a1015">value06</label>
+        <input type="checkbox" id="a1016" value="value07"><label for="a1016">value07</label>
+        <input type="checkbox" id="a1017" value="value08"><label for="a1017">value08</label>
+        <input type="checkbox" id="a1018" value="value09" checked="checked"><label for="a1018">value09</label>
+
+
+       <script>
+           // OBJECT : 객체 래퍼를 생성합니다.
+           // 매개변수 콜론(:)으로 나뉘어져 있는 키(문자열)와 값(어떤 값이나 가능)의 쌍
+           var sObject = {};
+           var nObject = new Object();
+
+           // Object.assign() 열거할 수 있는 하나 이상의 출저 객체로부터 대상 객체로 속성을 복사할 때 사용합니다. 대상 객체를 반환합니다.
+           const target = {a:1, b:2}
+           const source = {c:4, d:5}
+
+           console.log(source.c)
+
+           if(source.c> 3){
+               console.log("SDFSDF")
+           }
+
+           // string to Array
+           var str = 'abc,def,ghi,jkl,mno,pqr,stu,vwx,yz'
+           var strToArr = str.split(",")
+           console.log(strToArr)
+           // Array to sring
+           var arrayToString = strToArr.join(',')
+           console.log(arrayToString)
+
+           var orginArr = [];
+           var tempArr= [];
+           var resultArr = [];
+           var chkbox = document.querySelectorAll("input[type='checkbox']"); // $("input[type='checkbox']")
+
+           window.addEventListener("DOMContentLoaded", function(){
+            checked = document.querySelectorAll("input[type='checkbox']:checked") // $("input[type='checkbox']:checked")
+            for(var i=0; i< checked.length;i++){
+                orginArr.push(checked[i].value)
+                tempArr.push(checked[i].value)
+            }
+           })
+           resultArr = orginArr;
+
+
+           $("input[type='checkbox']").each(function (index, item) { 
+              $(item).on("click", function(){
+                var chk = item.checked
+                    if(chk){
+                        //해당하는 값 추가
+                        resultArr.push(item.value)
+
+                        //tempArr.lenght === resultArr.length && 
+                        console.log("AAAA" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                        console.log(resultArr)
+                        console.log(tempArr)
+                    } else{
+                        //해당하는 값 삭제
+                        
+                        resultArr.splice(resultArr.indexOf(item.value),1)
+                        console.log("BBBB" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                    }
+              })
+          })
+          /*
+           chkbox.forEach(elem => {
+               elem.addEventListener("click", function(){
+                    var chk = elem.checked
+                    if(chk){
+                        //해당하는 값 추가
+                        resultArr.push(elem.value)
+
+                        //tempArr.lenght === resultArr.length && 
+                        console.log("AAAA" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                        console.log(resultArr)
+                        console.log(tempArr)
+                    } else{
+                        //해당하는 값 삭제
+                        
+                        resultArr.splice(resultArr.indexOf(elem.value),1)
+                        console.log("BBBB" +
+                        tempArr.sort().every(function(value, index){
+                            return value === resultArr.sort()[index]
+                            })
+                        )
+                    }
+               })
+           })
+           */
+       </script>
+    </body>
+</html>

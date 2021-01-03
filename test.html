@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <ul id="commentUl">
+            <script type="text/x-handlebars-template" id="commentTemplate">
+                <li class="list_item">
+                    <div>
+                        <div class="review_area">
+                            <p class="review">{{comment}}</p>
+                        </div>
+                        <div class="info_area">
+                            <div class="review_info"> 
+                                <span class="name">{{name}}</span> 
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </script>
+        </ul>
+        
+        <ul id="commentUl2">
+            <script type="text/x-handlebars-template" id="commentTemplate2">
+                {{#each comments}}
+                <li class="list_item">
+                    <div>
+                        <div class="review_area">
+                            <p class="review">{{comment}}</p>
+                        </div>
+                        <div class="info_area">
+                            <div class="review_info"> 
+                                <span class="name">{{name}}</span> 
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+            </script>
+        </ul>
+
+
+        <script type="text/javascript" charset="utf-8">
+ 
+            // 데이터
+            var data = {
+                comment : '굿' ,name : "초보" 
+            }
+
+            var data2 = {
+                comments : [
+                    {comment : '굿' ,name : "김춘삼" },
+                    {comment : '별로' ,name : "허준" },
+                    {comment : '좋았음' ,name : "대장금" },
+                    {comment : '음..' ,name : "김두한"},
+                    {comment : '가성비가 그닥..',name : "시라소니" }
+                ]
+            }
+           //2. htmlTemplate을 가져온후 Handlebars로 compile 한다.
+           var commentTemplate = $("#commentTemplate").html();
+           var commentBindTemplate = Handlebars.compile(commentTemplate);
+ 
+
+           var commentTemplate2 = $("#commentTemplate2").html();
+           var commentBindTemplate2 = Handlebars.compile(commentTemplate2);
+            //3. 컴파일한 템플릿에 데이터를 집어넣는다. 이 때 리턴값은 html로 나온다.
+            var resultHtml = '';
+            resultHtml += commentBindTemplate(data);
+
+            var resultHtml2 = '';
+            resultHtml2 += commentBindTemplate2(data2);
+ 
+            // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
+            
+            $("#commentUl").append(resultHtml)
+            $("#commentUl2").append(resultHtml2)
+        </script>
+    </body>
+</html>

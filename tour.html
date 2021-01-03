@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="video">
+            
+        </div>
+       <script>
+           var baseURL = "http://apis.data.go.kr/6460000/tourInfo";
+           var token = "mh%2BIoUoxJV%2BFxL3eIoDR92ze%2Bey%2FRmeGzthYzBy6mP%2FGltuS0j%2BKWcRkVkCYTxo2vKw%2FD89K1p76MXlXcifp0w%3D%3D";
+           var text = "&tourArea=목포&tourCategory=관광&numOfRows=10"
+            $.ajax({ 
+                url: baseURL+"?key="+token+text // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+            .done(function(data) {      
+                console.log(data)
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+               console.log("오류")
+            })  
+       </script> 
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div id="youtube">
+
+        </div>
+        <div id="list">
+
+        </div>
+       <script>
+           var baseURL = "https://youtube.googleapis.com/youtube/v3/playlistItems";
+           var token = "AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo";
+           var playlistId ='PLH0WHo3g757Vo4wYw5x2k5gFEPMiMo7eg';
+           var options = {
+               part: 'snippet',
+               key: token,
+               masResults:20,
+               playlistId: playlistId
+           }
+
+           function loadVids(){
+               $.getJSON(baseURL, options, function(data){
+                   //success
+                    console.log(data)
+                    var id = data.items[0].snippet.resourceId.videoId;
+                    mainVid(id)
+                    resultLoop(data)
+               })
+           }
+
+           function mainVid(id){
+               $('#youtube').html(`<iframe width="560" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
+           }
+
+           function resultLoop(data){
+               
+
+               $.each(data.items, function(i, item){
+                var thumb = item.snippet.thumbnails.medium.url;
+                var title = item.snippet.title;
+                $('#list').append(`
+                    <article>
+                        <img src="${thumb}" alt="" class="thumb" />
+                        <h4>${title}</h4>
+                    </article>
+               `)
+               })
+               
+           }
+           /*
+            $.ajax({ 
+                url: baseURL+"?key="+token // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                ,data: { part: "snippet, contentDetails" ,playlistId:"PLBCF2DAC6FFB574DE"} // HTTP 요청과 함께 서버로 보낼 데이터 
+               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+            .done(function(data) {      
+                var length = data.items.length
+                var result ='';
+                console.log(data)
+                for(var i=0;i < length; i++){
+                    var thumb = data.items[i].id
+                    result += "<li>"+thumb+"</li>" 
+                }
+                $("#youtube").append(result)
+            }) 
+            .fail(function(xhr, status, errorThrown) { 
+               console.log("오류")
+            })  
+            */
+            loadVids()
+       </script> 
+    </body>
+</html>
