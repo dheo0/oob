@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    </head>
+    <body>
+        <ul id="demo">
+            <script type="template" id="commentTemplate">
+                
+                {{#each .}}
+                <li class="list_item">
+                    {{@key}}
+                    {{#each this}}
+                    <div>
+                        <input type="checkbox" id="{{id}}"><label for="{{id}}">{{name}}</label>
+                    </div>
+                    {{/each}}
+                </li>
+                {{/each}}
+                
+            </script>
+        </ul>
+
+        <script>
+            var orign = {
+                users: [
+                    { name: "name1", id: "aaa1", classify: "depth1" },
+                    { name: "name2", id: "aaa2", classify: "depth1" },
+                    { name: "name3", id: "aaa3", classify: "depth2" },
+                    { name: "name4", id: "aaa4", classify: "depth2" },
+                    { name: "name5", id: "aaa5", classify: "depth2" },
+                    { name: "name6", id: "aaa6", classify: "depth3" },
+                    { name: "name7", id: "aaa7", classify: "depth3" },
+                    { name: "name8", id: "aaa8", classify: "depth3" },
+                    { name: "name9", id: "aaa9", classify: "depth3" },
+                ]
+            }
+
+            var res = orign.users.reduce((prev, curr) => {
+            const {classify, ...rest} = curr;
+            if(prev.hasOwnProperty(classify)) {
+                prev[classify].push(rest);
+            } else {
+                prev[classify] = [rest];
+            }
+            return prev;
+            }, {});
+
+            console.log(res)
+            
+            
+            var commentTemplate = document.querySelector("#commentTemplate").innerHTML;
+            var commentBindTemplate = Handlebars.compile(commentTemplate);
+            var resultHtml = '';
+            resultHtml += commentBindTemplate(res);
+            $("#demo").html(resultHtml)
+            
+            /*
+            var result = {
+                "depth1" : [
+                    { name: "name1", id: "aaa1"},
+                    { name: "name2", id: "aaa2"},
+                ],
+                "depth2" : [
+                    { name: "name3", id: "aaa3"},
+                    { name: "name4", id: "aaa4"},
+                    { name: "name5", id: "aaa5"},
+                    { name: "name6", id: "aaa6"},
+                ],
+                "depth3" : [
+                    { name: "name7", id: "aaa7"},
+                    { name: "name8", id: "aaa8"},
+                    { name: "name9", id: "aaa9"},
+                ],
+               
+            }
+            */
+            var sObj = {};
+            sObj.nArray = [];
+
+            /*
+            data.users.forEach((item) => {
+                sObj.nArray.push(item.first)
+            })*/
+            
+            var uniqueArr = sObj.nArray.filter((item, index) => {
+                return sObj.nArray.indexOf(item) === index
+            })
+/*         
+            for (var i in data.users){
+                sObj.nArray.push(data.users[i].first)
+            }
+*/
+            //console.log(uniqueArr)
+            var temp = {}
+                temp.first = []
+                temp.child = []
+
+                temp.first.push(uniqueArr)
+               // console.log(temp)
+
+            
+
+            var result = {
+                "대분류1" : [
+                    {comment : '굿' ,name : "김춘삼" },
+                    {comment : '별로' ,name : "허준" },
+                    {comment : '좋았음' ,name : "대장금" },
+                    {comment : '음..' ,name : "김두한"},
+                    {comment : '가성비가 그닥..',name : "시라소니" }
+                ],
+                "대분류2" : [
+                    {comment : '굿' ,name : "김춘삼" },
+                    {comment : '별로' ,name : "허준" },
+                    {comment : '좋았음' ,name : "대장금" },
+                    {comment : '음..' ,name : "김두한"},
+                    {comment : '가성비가 그닥..',name : "시라소니" }
+                ],
+            }
+
+            
+            
+        </script>
+    </body>
+</html>
