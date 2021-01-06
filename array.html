@@ -7,22 +7,23 @@
     </head>
     <body>
         <ul id="demo">
-            <script type="template" id="commentTemplate">
-                
-                {{#each this}}
-                
-                <li class="list_item">
-                    <div>
-                        <div class="review_area">
-                            <img src="{{photo}}" alt=""></p>
-                        </div>
-                    </div>
-                </li>
-                
-                {{/each}}
-                
-            </script>
+           
         </ul>
+        <script type="template" id="commentTemplate">
+                
+            {{#each this}}
+            
+            <li class="list_item">
+                <div>
+                    <div class="review_area">
+                        <img src="{{photo}}" alt=""></p>
+                    </div>
+                </div>
+            </li>
+            
+            {{/each}}
+            
+        </script>
         <div>
             <input type="checkbox" name="chkgroup" id="chk01" /><label for="chk01">111</label>
             <input type="checkbox" name="chkgroup" id="chk02" /><label for="chk02">111</label>
@@ -37,35 +38,14 @@
             <input type="checkbox" name="chkgroup" id="chk11" /><label for="chk11">111</label>
             <input type="checkbox" name="chkgroup" id="chk12" /><label for="chk12">111</label>
         </div>
+        <button type="button" onclick="more()" class="btn">더보기</button>
        <script>
-          
-           var baseURL = "http://sample.bmaster.kro.kr/contactS";
-            $.ajax({ 
-                url: baseURL // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
-               ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
-               ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
-               
-               //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
-            }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
-            .done(function(data) {
-                var list = data
-                var newArray =  list.contacts.filter(function(elem, index, array){
-                    return elem.no < 1592030163108
-                })
+           var page = 1,
+               pagelimit = 11,
+               totalcount = 100;
+            
 
-                var commentTemplate = document.querySelector("#commentTemplate").innerHTML;
-                var commentBindTemplate = Handlebars.compile(commentTemplate);
-                //3. 컴파일한 템플릿에 데이터를 집어넣는다. 이 때 리턴값은 html로 나온다.
-                var resultHtml = '';
-                resultHtml += commentBindTemplate(newArray);
-                
-                // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
-                $("#demo").html(resultHtml)
-                
-            }) 
-            .fail(function(xhr, status, errorThrown) { 
-               console.log("오류")
-            })  
+               fetchData()
             
             var things = new Object();
             var arr2;
@@ -81,6 +61,51 @@
             things.thing =[]
             //console.log(things.thing)
             
+
+            function more(){
+                if( page * pagelimit < totalcount){
+                    page++;
+                    fetchData()
+                    if(page*pagelimit >= totalcount){
+                        $(".btn").hide();
+                    }
+                } 
+                console.log("Next Page: " + page + "page*limit" + page * pagelimit );
+            }
+
+            function fetchData(){
+                var baseURL = "http://sample.bmaster.kro.kr/contactS";
+                $.ajax({ 
+                url: baseURL // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+                ,method  : "GET" // HTTP 요청 메소드(GET, POST 등) 
+                ,dataType: "json"// 서버에서 보내줄 데이터의 타입,
+                ,data: { pagesize :pagelimit, pageno : page, totalcount : totalcount}
+                //,headers : {Authorization: 'Bearer AIzaSyA8OXkgW7_criCf7l-aN1DdZOjq64nxlqo'}
+                }) // HTTP 요청이 성공하면 요청한 데이터가 done() 메소드로 전달됨. 
+                .done(function(data) {
+                    var list = data;
+                    var newArray =  list.contacts.filter(function(elem, index, array){
+                        return elem.no < 1592030163108
+                    })
+                    
+                    
+
+                    var commentTemplate = document.querySelector("#commentTemplate").innerHTML;
+                    var commentBindTemplate = Handlebars.compile(commentTemplate);
+                    //3. 컴파일한 템플릿에 데이터를 집어넣는다. 이 때 리턴값은 html로 나온다.
+                    var resultHtml = '';
+                    resultHtml += commentBindTemplate(data.contacts);
+                    
+                    // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
+                    $("#demo").append(resultHtml);
+
+                    
+                    
+                }) 
+                .fail(function(xhr, status, errorThrown) { 
+                        console.log("오류")
+                })  
+            }
        </script> 
     </body>
 </html>
