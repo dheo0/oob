@@ -1,8 +1,61 @@
 
 <script>
+    // 전역변수
+    var sCategory; // 현재 카테고리 - 탭이 바뀌면 카테고리 바뀐다
+
     /*
-    
+        시황 0101
+        전문가컬럼 0102
+        라이프 0103
+
+
+        시황을 클릭하면 
+
     */
+
+    function fncSendRequest(sCate){
+        var sCategory = sCate;
+        var databody = {};
+            databody.sCategory = sCate;
+
+    }
+
+    function fncMore(sCate){
+        var sCategory = sCate
+    }
+
+    /* 키워드 없음 표시*/
+    /* 키워드를 아무 설정 안했을 경우 */
+
+    /* 키워드를 설정했지만 키워드 없을 경우*/
+
+    function noDataView(){
+        
+        // noKeyword : 나의관심사
+        // customInfo  : 맞춤정보
+        var noKeyword   = isNull(noKeyword); // null 체크
+        var customInfo  = isNull(customInfo); // null 체크
+        var noDataView; // 키워드 설정안했을 때 뷰
+        var noInfoView; // 키워드 설정했지만 맞춤정보 없을 경우 view
+        
+        // 키워드 아무 설정 안헀을 경우
+        if(noKeyword){
+            noInfoView.hide();
+            noDataView.show(); // 키워드가 없을 때
+        } else {
+            if(customInfo){
+                noDataView.hide();
+                noInfoView.show();
+            }
+        }
+
+    }
+
+    // 우선노출 체크
+    function fncPriorityList(){
+        
+    }
+
 
     /*
         키워드 설정

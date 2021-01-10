@@ -15,8 +15,10 @@
         <input type="checkbox" id="a1016" value="value07"><label for="a1016">value07</label>
         <input type="checkbox" id="a1017" value="value08"><label for="a1017">value08</label>
         <input type="checkbox" id="a1018" value="value09" checked="checked"><label for="a1018">value09</label>
-
-
+        <button type="button" onclick="chkAA()">삭제된 요소 찾기</button>
+        <ul>
+            <li><a href="#none" data-url="/images/ass/awy.pdf" onclick="fncSnsCall(this)">클릭스</a></li>
+        </ul>
        <script>
            // OBJECT : 객체 래퍼를 생성합니다.
            // 매개변수 콜론(:)으로 나뉘어져 있는 키(문자열)와 값(어떤 값이나 가능)의 쌍
@@ -27,23 +29,24 @@
            const target = {a:1, b:2}
            const source = {c:4, d:5}
 
-           console.log(source.c)
+           //console.log(source.c)
 
            if(source.c> 3){
-               console.log("SDFSDF")
+               //console.log("SDFSDF")
            }
 
            // string to Array
            var str = 'abc,def,ghi,jkl,mno,pqr,stu,vwx,yz'
            var strToArr = str.split(",")
-           console.log(strToArr)
+           //console.log(strToArr)
            // Array to sring
            var arrayToString = strToArr.join(',')
-           console.log(arrayToString)
+           //console.log(arrayToString)
 
            var orginArr = [];
            var tempArr= [];
            var resultArr = [];
+           var deletedArr = [];
            var chkbox = document.querySelectorAll("input[type='checkbox']"); // $("input[type='checkbox']")
 
            window.addEventListener("DOMContentLoaded", function(){
@@ -69,20 +72,31 @@
                             return value === resultArr.sort()[index]
                             })
                         )
-                        console.log(resultArr)
-                        console.log(tempArr)
                     } else{
                         //해당하는 값 삭제
-                        
                         resultArr.splice(resultArr.indexOf(item.value),1)
-                        console.log("BBBB" +
-                        tempArr.sort().every(function(value, index){
-                            return value === resultArr.sort()[index]
-                            })
-                        )
+                       
+                        
                     }
               })
           })
+
+          function chkAA(){
+            
+            var isSame = tempArr.sort().every(function(value, index){
+                return value === resultArr.sort()[index]
+                })
+            
+                
+            if (resultArr.length < tempArr.length ){
+                deletedArr = tempArr.filter(function(e){
+                    return resultArr.indexOf(e) === -1
+                })    
+            }
+            console.log(deletedArr)
+          }
+        
+           
           /*
            chkbox.forEach(elem => {
                elem.addEventListener("click", function(){
@@ -112,6 +126,13 @@
                })
            })
            */
+
+           function fncSnsCall(param){
+               var _this = param;
+               console.log(_this)
+               var data = _this.getAttribute("data-url");
+               console.log(data)
+           }
        </script>
     </body>
 </html>
