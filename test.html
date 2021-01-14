@@ -25,15 +25,15 @@
         
         <ul id="commentUl2">
             <script type="text/x-handlebars-template" id="commentTemplate2">
-                {{#each comments}}
+                {{#each data.list}}
                 <li class="list_item">
                     <div>
                         <div class="review_area">
-                            <p class="review">{{comment}}</p>
+                            <p class="review">{{summary}}</p>
                         </div>
                         <div class="info_area">
                             <div class="review_info"> 
-                                <span class="name">{{name}}</span> 
+                                <span class="name">{{keyword}}</span> 
                             </div>
                         </div>
                     </div>
@@ -51,12 +51,22 @@
             }
 
             var data2 = {
-                comments : [
-                    {comment : '굿' ,name : "김춘삼" },
-                    {comment : '별로' ,name : "허준" },
-                    {comment : '좋았음' ,name : "대장금" },
-                    {comment : '음..' ,name : "김두한"},
-                    {comment : '가성비가 그닥..',name : "시라소니" }
+               list: [
+                   {
+                   "r_supp3144" : 
+                        { "summary" : "하늘 향해 두팔 벌린 아오이" ,
+                        "keyword" : "키워드,키워드1,키워드2" }
+                    },
+                    {
+                   "r_supp3144" : 
+                        { "summary" : "하늘 향해 두팔 벌린 소리" ,
+                        "keyword" : "사미라1,사미라2,사미라3,사미라4" }
+                    },
+                    {
+                   "r_supp3144" : 
+                        { "summary" : "하늘 향해 두팔 벌린 갈까" ,
+                        "keyword" : "승부1,승부2,승부3" }
+                    },
                 ]
             }
            //2. htmlTemplate을 가져온후 Handlebars로 compile 한다.
@@ -70,13 +80,60 @@
             var resultHtml = '';
             resultHtml += commentBindTemplate(data);
 
-            var resultHtml2 = '';
-            resultHtml2 += commentBindTemplate2(data2);
- 
+            var data = {}
+                data.list  = [];
+                data.list.keyword = [];
+                
+                var split = [];
+                var tempStr = [];
+                var newStr = [];
+                for(var i=0; i < data2.list.length;i++){
+                    data.list.push(data2.list[i].r_supp3144)
+                    split[i] = data.list[i].keyword.split(",")
+                    var aaa=[];
+                    for(var j=0; j < split[i].length; j++){
+                        var word = "#"+ split[i][j]+" ";
+                        aaa.push(word)
+                    }
+                    data.list[i].keyword = aaa.toString(); // toString 빼기
+                }
+                
+                    
+                
+                //data.list[1].keyword = ["#"+split[1][0], "#"+split[1][1], "#"+split[1][2]];
+                //data.list[2].keyword = ["#"+split[2][0], "#"+split[2][1], "#"+split[2][2]];
+                
+                /*console.log("#"+split[0][0])
+                console.log("#"+split[0][1])
+                console.log("#"+split[0][2])
+                
+                console.log("#"+split[1][0])
+                console.log("#"+split[1][1])
+                console.log("#"+split[1][2])
+                console.log("#"+split[1][3])
+
+                console.log("#"+split[2][0])
+                console.log("#"+split[2][1])
+                console.log("#"+split[2][2])*/
+                
+
+                console.log(data)
+
+
+                //console.log(split.length, split[1].length)
+                // newStr = newStr.split(",");
+                /*
+                for(var i=0; i< newStr.length; i++){
+                        var sttr = "#"+newStr[i]
+                        reNew.push(sttr)
+                }*/
+                //console.log(split[2])
+               
+                
             // 4. 리턴받은 html을 target에 innerHTML로 세팅한다. 
             
             $("#commentUl").append(resultHtml)
-            $("#commentUl2").append(resultHtml2)
+            $("#commentUl2").append(data)
         </script>
     </body>
 </html>

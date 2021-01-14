@@ -96,6 +96,10 @@
              "content" : {
                  "title" : "너없는 동안 나는 아무것도 할 수 없어",
                  "keyword" : "abc,def,fgh,ijk,lmn"
+             },
+             "content" : {
+                 "title" : "너없는 동안 나는 아무것도 할 수 없어",
+                 "keyword" : "abc,def,fgh,ijk,lmn"
              }
         }  
         
@@ -104,7 +108,7 @@
             cgData.content.title =  "너없는 동안 나는 아무것도 할 수 없어";
             cgData.content.keyword = "abc,def,fgh,ijk,lmn"
         
-        console.log(cgData)
+        
         
             var newStr = cgData.content.keyword;
                 newStr = newStr.split(",");
@@ -114,8 +118,9 @@
                 var sttr = "#"+newStr[i]
                 reNew.push(sttr)
             }
+            
             cgData.content.keyword = reNew;
-        console.log(cgData)
+            
         /*var str = "abc,def,fgh,ijk,lmn"   
         var newStr = str.split(",")
         var reNew = []
