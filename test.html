@@ -85,17 +85,17 @@
                 data.list.keyword = [];
                 
                 var split = [];
-                var tempStr = [];
-                var newStr = [];
+                
+                
                 for(var i=0; i < data2.list.length;i++){
                     data.list.push(data2.list[i].r_supp3144)
                     split[i] = data.list[i].keyword.split(",")
-                    var aaa=[];
+                    var tempStr = [];
                     for(var j=0; j < split[i].length; j++){
-                        var word = "#"+ split[i][j]+" ";
-                        aaa.push(word)
+                        var temp = "#"+ split[i][j]+" ";
+                        tempStr.push(temp)
                     }
-                    data.list[i].keyword = aaa.toString(); // toString 빼기
+                    data.list[i].keyword = tempStr.toString(); // toString 빼기
                 }
                 
                     
