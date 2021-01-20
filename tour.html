@@ -34,27 +34,20 @@
                     };
         
 
-        var data = {};
-            data.a = [];
-            data.b = [];
-            data.c = [];
-            //data.kospi = [{kospi : 2980},{kospi_ft : 0.5}, {kospi_ft_ratio : 0.5}];
-            for(var i=0; i< Object.keys(orgin).length; i++){
-                
-                var key = Object.keys(orgin)[i];
-                var value = orgin[Object.keys(orgin)[i]];
+                    var data = { a: [], b: [], c: [] };
+    
+    for (var i = 0; i < Object.keys(orgin).length; i++) {
+        var key = Object.keys(orgin)[i];
+        var value = orgin[Object.keys(orgin)[i]];
 
-                if(key.indexOf("ab") !== -1){
-                    data.a.push({ [key] : value})
-                }
-                
-                if(key.indexOf("bc") !== -1){
-                    data.b.push({ [key] : value})
-                }
-                if(key.indexOf("cd") !== -1){
-                    data.c.push({ [key] : value})
-                }
-            }
+        /* modified code start */
+        var target = key.charAt(0);
+
+        data[target].push({
+          [key]: value
+        });
+        /* modified code end */
+    }
 
             console.log(data)
         var arr = ["kospi", "kosdaq", "wti", "gold", "dollar", "nasdaq", "nb", "dow"];
