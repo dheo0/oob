@@ -25,5 +25,42 @@
                console.log("오류")
             })  
        </script> 
+       
+    <script>
+        var orgin = {
+                        ab: 2000, ab_ft: 1500, ab_ratio: 3.0, 
+                        bc:22000, bc_ft:1300, bc_ratio: 5.0,
+                        cd:22000, cd_ft:1300, cd_ratio: 9.0,
+                    };
+        
+
+        var data = {};
+            data.a = [];
+            data.b = [];
+            data.c = [];
+            //data.kospi = [{kospi : 2980},{kospi_ft : 0.5}, {kospi_ft_ratio : 0.5}];
+            for(var i=0; i< Object.keys(orgin).length; i++){
+                
+                var key = Object.keys(orgin)[i];
+                var value = orgin[Object.keys(orgin)[i]];
+
+                if(key.indexOf("ab") !== -1){
+                    data.a.push({ [key] : value})
+                }
+                
+                if(key.indexOf("bc") !== -1){
+                    data.b.push({ [key] : value})
+                }
+                if(key.indexOf("cd") !== -1){
+                    data.c.push({ [key] : value})
+                }
+            }
+
+            console.log(data)
+        var arr = ["kospi", "kosdaq", "wti", "gold", "dollar", "nasdaq", "nb", "dow"];
+        for(var i=0;i < arr.length; i++){
+            console.log("#"+ arr[i]+ " show");
+        }
+    </script>
     </body>
 </html>
