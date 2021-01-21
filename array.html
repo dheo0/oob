@@ -38,15 +38,69 @@
             <input type="checkbox" name="chkgroup" id="chk11" /><label for="chk11">111</label>
             <input type="checkbox" name="chkgroup" id="chk12" /><label for="chk12">111</label>
         </div>
+
+
+        <ul id="aaa">
+          
+        </ul>
+        <script type="template" id="template2">
+            {{#kospi}}
+            <li>
+                <p>{{kospi}}</p>
+                <p>{{kospi_ft}}</p>
+                <p>{{kospi_ft_ratio}}</p>
+            </li>
+            {{/kospi}}
+            {{#nasdaq}}
+            <li>
+                <p>{{nasdaq}}</p>
+                <p>{{nasdaq_ft}}</p>
+                <p>{{nasdaq_ft_ratio}}</p>
+            </li>
+            {{/nasdaq}}
+        </script>
+
         <button type="button" onclick="more()" class="btn">더보기</button>
        <script>
            var page = 1,
                pagelimit = 11,
                totalcount = 100;
-            
+            var arr = ["kospi","gold"]
 
-               fetchData()
+            var newdata = {};
+                newdata.kospi = [{"kospi":"1560"},{"kospi_ft":"12.58"},{"kospi_ft_ratio":"3.0"}];
+                newdata.nasdaq = [{"nasdaq":"2560"},{"nasdaq_ft":"22.58"},{"nasdaq_ft_ratio":"2.0"}];
+                newdata.gold = [{"gold":"1560"},{"gold_ft":"12.58"},{"gold_ft_ratio":"3.0"}];
+                newdata.wti = [{"wti":"1560"},{"wti_ft":"12.58"},{"wti_ft_ratio":"3.0"}];
+                newdata.dow = [{"dow":"1560"},{"dow_ft":"12.58"},{"dow_ft_ratio":"3.0"}];
+                console.log(newdata)
+              // fetchData()
             
+            for(var i=0; i < arr.length; i++){
+
+            }
+            // 설정값이 없으면 전체 다 뿌려준다
+            // 설정값이 있으면 설정값에 있는 것만 뿌려준다
+
+
+            var newcodes = function(){
+                var dcode  = ["kospi", "nasdaq"];
+                localStorage.setItem("stock", dcode)
+                return dcode
+            }
+
+            var codes = newcodes();
+            console.log(codes)
+            var getItem = localStorage.getItem("stock");
+            console.log(getItem)
+            
+            $(document).ready(function(){
+                var template2 = $("#template2").html();
+                var bindTemp = Handlebars.compile(template2);
+                $("#aaa").html(bindTemp(newdata))
+            })
+
+
             var things = new Object();
             var arr2;
             things.thing = new Array();
@@ -106,6 +160,13 @@
                         console.log("오류")
                 })  
             }
+
+
+          
+
+
+
+
        </script> 
     </body>
 </html>
