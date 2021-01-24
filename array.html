@@ -161,9 +161,20 @@
                 })  
             }
 
+            function getAppSave(){
+                var aValue = localStorage.getItem("abc");
+                var status;
+                if(aValue){
+                    status = aValue;
+                } else {
+                    status = localStorage.setItem("abc", ["kospi","kosdaq"])
+                     
+                }
 
+                return status;
+            }
           
-
+            console.log(getAppSave())
 
 
 
